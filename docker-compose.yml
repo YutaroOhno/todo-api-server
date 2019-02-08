@@ -17,13 +17,14 @@ services:
     depends_on:
       - db
     volumes:
-      - .:/go/src/github.com/yutaro/apiii
+      - .:/go/src/apiii
     environment:
       PORT: 9800
       DB_HOST: db
       DB_NAME: apiii_development
-      DB_USER: yutaro
-      DB_PASSWORD: yutaro
+      DB_USER: root
+      DB_PASSWORD: root
+      PROTOCOL: tcp(db)
     ports:
       - '9800:9800'
     tty:
