@@ -5,7 +5,7 @@ import (
 )
 
 type DB struct {
-	gormDB *gorm.DB
+	GormDB *gorm.DB
 }
 
 type Database interface {
@@ -13,5 +13,5 @@ type Database interface {
 }
 
 func (db *DB) Close() {
-	db.gormDB.Close()
+	db.GormDB.Close()
 }

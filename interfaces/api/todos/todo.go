@@ -17,18 +17,20 @@ func NewTodoController(db *db.DB) *TodoController {
 	return &TodoController{
 		Usecase: &todos.TodoUsecase{
 			TodoRepository: &repositories.TodoRepository{},
+			DB: db,
 		},
 	}
 }
 
 func (controller *TodoController) GetAllTodo(c *gin.Context) {
+
+	todos, err := controller.Usecase.GetAllTodo()
+	if err != nil {
+		c.JSON(http.StatusInternalServerError, gin.H{
+			"message": "error",
+		})
+	}
 	c.JSON(http.StatusOK, gin.H{
-		"message": "pong",
+		"message": todos,
 	})
 }
-
-// func (controller *UserController)GetUser(c *gin.Context) {
-// 	c.JSON(http.StatusOK, gin.H{
-// 		"message": "pong",
-// 	})
-// }

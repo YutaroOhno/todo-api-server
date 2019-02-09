@@ -8,6 +8,8 @@ import (
 type TodoRepository struct {
 }
 
-func (repo *TodoRepository) SelectByID(db *gorm.DB, userId uint) (*entities.Todo, error) {
-	return &entities.Todo{}, nil
+func (repo *TodoRepository) FindAll(db *gorm.DB) ([]entities.Todo, error) {
+	var todos []entities.Todo
+	db.Find(&todos)
+	return todos, nil
 }

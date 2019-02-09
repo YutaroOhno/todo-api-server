@@ -6,5 +6,5 @@ import (
 )
 
 type TodoRepository interface {
-	SelectByID(*gorm.DB, uint) (*entities.Todo, error)
+	FindAll(*gorm.DB) ([]entities.Todo, error)
 }

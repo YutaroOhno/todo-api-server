@@ -28,5 +28,5 @@ func (mysql *Mysql) Open() *DB {
 	  panic(err.Error())
 	}
 
-	return &DB{gormDB: db}
+	return &DB{GormDB: db}
 }
