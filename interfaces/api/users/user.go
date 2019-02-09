@@ -1,9 +1,12 @@
 package users
 
 import (
+	"net/http"
+
 	"apiii/infrastructure/db"
 	"apiii/usecases/users"
 	"apiii/interfaces/repositories"
+	"github.com/gin-gonic/gin"
 )
 
 type UserController struct {
@@ -16,4 +19,10 @@ func NewUserController(db *db.DB) *UserController {
 			UserRepository: &repositories.UserRepository{},
 		},
 	}
+}
+
+func (controller *UserController)GetUser(c *gin.Context) {
+	c.JSON(http.StatusOK, gin.H{
+		"message": "pong",
+	})
 }
