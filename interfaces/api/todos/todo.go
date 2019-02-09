@@ -27,7 +27,7 @@ func (controller *TodoController) GetAllTodo(c *gin.Context) {
 	todos, err := controller.Usecase.GetAllTodo()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
-			"message": "error",
+			"message": err.Error(),
 		})
 	}
 	c.JSON(http.StatusOK, gin.H{
