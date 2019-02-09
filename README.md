@@ -1,4 +1,5 @@
-## dep install
+## SetUp
+### dep install
 ```
 $ go get -u github.com/golang/dep/cmd/dep
 ```
@@ -7,12 +8,27 @@ $ go get -u github.com/golang/dep/cmd/dep
 $ dep ensure
 ```
 
-## gorm install
+### gorm install
 ```
 go get github.com/jinzhu/gorm
 ```
 
-## docker起動
+### docker起動
 ```
 docker-compose up
+```
+
+## migration
+### goose install
+```
+$ go get bitbucket.org/liamstask/goose/cmd/goose
+```
+### migrationファイル作成
+```
+$ goose create 〇〇 sql
+```
+
+### migration実行
+```
+$goose up
 ```
