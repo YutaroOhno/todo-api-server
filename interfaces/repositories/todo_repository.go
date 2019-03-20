@@ -13,3 +13,11 @@ func (repo *TodoRepository) FindAll(db *gorm.DB) ([]entities.Todo, error) {
 	db.Find(&todos)
 	return todos, nil
 }
+
+func (repo *TodoRepository) Insert(db *gorm.DB, todo *entities.Todo) error {
+	if err := db.Create(todo).Error; err != nil {
+		return err
+	}
+
+	return nil
+}

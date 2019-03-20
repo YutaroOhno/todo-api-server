@@ -7,4 +7,5 @@ import (
 
 type TodoRepository interface {
 	FindAll(*gorm.DB) ([]entities.Todo, error)
+	Insert(*gorm.DB, *entities.Todo) error
 }
