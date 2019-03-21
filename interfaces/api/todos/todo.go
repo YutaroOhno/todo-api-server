@@ -36,6 +36,9 @@ func (controller *TodoController) GetAllTodo(c *gin.Context) {
 			"message": err.Error(),
 		})
 	}
+
+	//とりあえずフロントからのアクセスを許可したいので、記述。
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.JSON(http.StatusOK, gin.H{
 		"message": todos,
 	})
