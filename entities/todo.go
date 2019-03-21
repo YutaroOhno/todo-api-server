@@ -6,4 +6,4 @@ type Todo struct {
 	Text string `json:"text" gorm:"not null"`
 }
 
-FindAllで取ったものをそのまま返しているが、これはoutputportを使った方が良いのだろうか？もしそれなら、このstructにjsonの記述はいらなそう。
+// FindAllで取ったものをそのまま返しているが、これはoutputportを使った方が良いのだろうか？もしそれなら、このstructにjsonの記述はいらなそう。
