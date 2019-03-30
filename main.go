@@ -1,8 +1,8 @@
 package main
 
 import (
-	"apiii/infrastructure/server"
 	"apiii/infrastructure/db"
+	"apiii/infrastructure/server"
 )
 
 func main() {

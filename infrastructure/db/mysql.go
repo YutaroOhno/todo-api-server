@@ -15,17 +15,17 @@ func NewMysql() *Mysql {
 }
 
 func (mysql *Mysql) Open() *DB {
-	DBMS     := "mysql"
-	USER     := os.Getenv("DB_USER")
-	PASS     := os.Getenv("DB_PASSWORD")
+	DBMS := "mysql"
+	USER := os.Getenv("DB_USER")
+	PASS := os.Getenv("DB_PASSWORD")
 	PROTOCOL := os.Getenv("PROTOCOL")
-	DBNAME   := os.Getenv("DB_NAME")
-  
-	CONNECT := USER+":"+PASS+"@"+PROTOCOL+"/"+DBNAME
+	DBNAME := os.Getenv("DB_NAME")
+
+	CONNECT := USER + ":" + PASS + "@" + PROTOCOL + "/" + DBNAME
 	db, err := gorm.Open(DBMS, CONNECT)
-  
+
 	if err != nil {
-	  panic(err.Error())
+		panic(err.Error())
 	}
 
 	return &DB{GormDB: db}

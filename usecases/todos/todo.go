@@ -2,17 +2,17 @@ package todos
 
 import (
 	"apiii/entities"
+	"apiii/infrastructure/db"
 	"apiii/usecases/ports"
 	"apiii/usecases/repositories"
-	"apiii/infrastructure/db"
 )
 
 type TodoUsecase struct {
 	TodoRepository repositories.TodoRepository
-	DB *db.DB
+	DB             *db.DB
 }
 
-func(usecase *TodoUsecase) GetAllTodo() ([]entities.Todo, error){
+func (usecase *TodoUsecase) GetAllTodo() ([]entities.Todo, error) {
 	todos, err := usecase.TodoRepository.FindAll(usecase.DB.GormDB)
 	if err != nil {
 		panic(err.Error())
@@ -23,7 +23,7 @@ func(usecase *TodoUsecase) GetAllTodo() ([]entities.Todo, error){
 func (usecase *TodoUsecase) CreateTodo(input *ports.TodoInputPort) (*ports.TodoOutputPort, error) {
 	todo := &entities.Todo{
 		Title: input.Title,
-		Text: input.Text,
+		Text:  input.Text,
 	}
 
 	if err := usecase.TodoRepository.Insert(usecase.DB.GormDB, todo); err != nil {
@@ -46,6 +46,6 @@ func (usecase *TodoUsecase) DeleteTodo(id int) error {
 func createOutputPort(todo *entities.Todo) *ports.TodoOutputPort {
 	return &ports.TodoOutputPort{
 		Title: todo.Title,
-		Text: todo.Text,
+		Text:  todo.Text,
 	}
 }
