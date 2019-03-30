@@ -11,8 +11,8 @@ import (
 
 // json定義
 type todoJSON struct {
-	Title string `json:"title" binding:"required"`
-	Text string `json:"text" binding:"required"`
+	Title string `form:"title" binding:"required"`
+	Text string `form:"text" json:"text" binding:"required"`
 }
 
 type TodoController struct {
@@ -37,6 +37,7 @@ func (controller *TodoController) GetAllTodo(c *gin.Context) {
 		})
 	}
 
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	//とりあえずフロントからのアクセスを許可したいので、記述。
 	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.JSON(http.StatusOK, gin.H{
@@ -46,22 +47,25 @@ func (controller *TodoController) GetAllTodo(c *gin.Context) {
 
 func (controller *TodoController) CreateTodo(c *gin.Context) {
 	var json todoJSON
-	if err := c.BindJSON(&json); err != nil {
+
+	if err := c.Bind(&json); err != nil {
 		//Errorの方はレスポンスオブジェクト作ってもいいかもね。
 		c.JSON(http.StatusBadRequest, err.Error())
 		return 
 	}
-
 	input := &ports.TodoInputPort{
 		Title: json.Title,
 		Text: json.Text,
 	}
-	
+
 	output, err := controller.Usecase.CreateTodo(input)
 	if err != nil {
+
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
+	//とりあえずフロントからのアクセスを許可したいので、記述。
+	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.JSON(http.StatusOK, output)
 }
