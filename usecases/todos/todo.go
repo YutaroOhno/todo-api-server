@@ -33,6 +33,16 @@ func (usecase *TodoUsecase) CreateTodo(input *ports.TodoInputPort) (*ports.TodoO
 	return createOutputPort(todo), nil
 }
 
+func (usecase *TodoUsecase) DeleteTodo(id int) error {
+	todo := entities.Todo{}
+	todo.ID = id
+	if err := usecase.TodoRepository.Delete(usecase.DB.GormDB, &todo); err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func createOutputPort(todo *entities.Todo) *ports.TodoOutputPort {
 	return &ports.TodoOutputPort{
 		Title: todo.Title,

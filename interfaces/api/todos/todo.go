@@ -7,6 +7,7 @@ import (
 	"apiii/usecases/ports"
 	"apiii/interfaces/repositories"
 	"github.com/gin-gonic/gin"
+	"strconv"
 )
 
 // json定義
@@ -29,7 +30,6 @@ func NewTodoController(db *db.DB) *TodoController {
 }
 
 func (controller *TodoController) GetAllTodo(c *gin.Context) {
-
 	todos, err := controller.Usecase.GetAllTodo()
 	if err != nil {
 		c.JSON(http.StatusInternalServerError, gin.H{
@@ -37,11 +37,8 @@ func (controller *TodoController) GetAllTodo(c *gin.Context) {
 		})
 	}
 
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
-	//とりあえずフロントからのアクセスを許可したいので、記述。
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.JSON(http.StatusOK, gin.H{
-		"message": todos,
+		"todos": todos,
 	})
 }
 
@@ -65,7 +62,20 @@ func (controller *TodoController) CreateTodo(c *gin.Context) {
 		return
 	}
 
-	//とりあえずフロントからのアクセスを許可したいので、記述。
-	c.Writer.Header().Set("Access-Control-Allow-Origin", "*")
 	c.JSON(http.StatusOK, output)
+}
+
+func (controller *TodoController) DeleteTodo(c *gin.Context) {
+	id := c.Param("id")
+	a, err := strconv.Atoi(id)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = controller.Usecase.DeleteTodo(a)
+	if err != nil {
+		c.JSON(http.StatusBadRequest, err.Error())
+		return
+	}
 }

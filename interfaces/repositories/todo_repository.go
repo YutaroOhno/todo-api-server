@@ -21,3 +21,11 @@ func (repo *TodoRepository) Insert(db *gorm.DB, todo *entities.Todo) error {
 
 	return nil
 }
+
+func (repo *TodoRepository) Delete(db *gorm.DB, todo *entities.Todo) error {
+	if err := db.Delete(todo).Error; err != nil {
+		return err
+	}
+
+	return nil
+}
