@@ -66,14 +66,13 @@ func (controller *TodoController) CreateTodo(c *gin.Context) {
 }
 
 func (controller *TodoController) DeleteTodo(c *gin.Context) {
-	id := c.Param("id")
-	a, err := strconv.Atoi(id)
+	id, err := strconv.Atoi(c.Param("id"))
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
 	}
 
-	err = controller.Usecase.DeleteTodo(a)
+	err = controller.Usecase.DeleteTodo(id)
 	if err != nil {
 		c.JSON(http.StatusBadRequest, err.Error())
 		return
