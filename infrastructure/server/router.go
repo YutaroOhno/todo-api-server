@@ -5,9 +5,10 @@ import (
 	"apiii/interfaces/api/todos"
 	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
+	"apiii/usecases/logging"
 )
 
-func Run(db *db.DB) {
+func Run(db *db.DB, logging logging.Logging) {
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
@@ -18,7 +19,7 @@ func Run(db *db.DB) {
 	}))
 
 	// 全てのtodo取得
-	todoController := todos.NewTodoController(db)
+	todoController := todos.NewTodoController(db, logging)
 	router.GET("/todos", todoController.GetAllTodo)
 	router.POST("/todos", todoController.CreateTodo)
 	router.DELETE("/todos/:id", todoController.DeleteTodo)

@@ -5,18 +5,23 @@ import (
 	"apiii/infrastructure/db"
 	"apiii/usecases/ports"
 	"apiii/usecases/repositories"
+	"apiii/usecases"
+	"apiii/usecases/logging"
 )
 
 type TodoUsecase struct {
 	TodoRepository repositories.TodoRepository
 	DB             *db.DB
+	Logging 		logging.Logging
 }
 
-func (usecase *TodoUsecase) GetAllTodo() ([]entities.Todo, error) {
+func (usecase *TodoUsecase) GetAllTodo() ([]entities.Todo, *usecases.UError) {
 	todos, err := usecase.TodoRepository.FindAll(usecase.DB.GormDB)
-	if err != nil {
-		panic(err.Error())
+	if uerr := usecases.GetUErrorByError(err); uerr != nil {
+		usecase.Logging.Error(uerr)
+		return nil, uerr
 	}
+
 	return todos, nil
 }
 

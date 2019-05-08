@@ -5,6 +5,8 @@ import (
 	"apiii/interfaces/repositories"
 	"apiii/usecases/ports"
 	"apiii/usecases/todos"
+	"apiii/usecases/logging"
+	"apiii/interfaces/api"
 	"github.com/gin-gonic/gin"
 	"net/http"
 	"strconv"
@@ -20,11 +22,12 @@ type TodoController struct {
 	Usecase *todos.TodoUsecase
 }
 
-func NewTodoController(db *db.DB) *TodoController {
+func NewTodoController(db *db.DB, logging logging.Logging) *TodoController {
 	return &TodoController{
 		Usecase: &todos.TodoUsecase{
 			TodoRepository: &repositories.TodoRepository{},
 			DB:             db,
+			Logging: logging,
 		},
 	}
 }
@@ -32,7 +35,7 @@ func NewTodoController(db *db.DB) *TodoController {
 func (controller *TodoController) GetAllTodo(c *gin.Context) {
 	todos, err := controller.Usecase.GetAllTodo()
 	if err != nil {
-		c.JSON(http.StatusInternalServerError, err.Error())
+		c.JSON(api.GetErrorResponse(err))
 		return
 	}
 
