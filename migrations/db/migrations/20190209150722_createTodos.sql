@@ -7,6 +7,7 @@ CREATE TABLE todos (
     title varchar(255) NOT NULL,
     text varchar(255) NOT NULL,
     PRIMARY KEY(id)
+    // Todo: crated_at・updated_at追加
 );
 
 -- +goose Down
@@ -15,5 +16,6 @@ CREATE TABLE users (
     id varchar(255) NOT NULL,
     name varchar(255) NOT NULL,
     PRIMARY KEY(id)
+    // Todo: crated_at・updated_at追加
 );
 DROP TABLE todos;
